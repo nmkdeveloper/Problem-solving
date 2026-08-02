@@ -18,7 +18,6 @@
 # ==========================================
 # 3. IDE & SYSTEM TEMPS
 # ==========================================
-.vscode/*
-!.vscode/tasks.json
+.vscode/
 .DS_Store
 .prettierrc
