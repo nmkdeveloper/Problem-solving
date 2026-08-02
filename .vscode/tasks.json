@@ -1,0 +1,23 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build and Run C++ (C++14 Mode)",
+      "type": "shell",
+      "command": "if string match -rq -i '\\.(c|cpp|cc|cxx|c\\+\\+)$' '${file}'; set_color blue; echo \"[1/3] Checking file: ${fileBasename}...\"; set_color yellow; echo \"[2/3] Compiling C++14 with flags & sanitizers...\"; set_color normal; cd '${fileDirname}' && rm -f '${fileBasenameNoExtension}.bin' && g++ -std=c++14 -O2 -march=native -Wall -Wextra -Wpedantic -Wshadow -Wunused -Wconversion -Wfloat-equal -Wlogical-op -Wduplicated-cond -D_GLIBCXX_DEBUG -fsanitize=address,undefined -fno-omit-frame-pointer '${file}' -o '${fileBasenameNoExtension}.bin'; and begin; set_color green; echo \"[3/3] Running program...\"; set_color normal; ./'${fileBasenameNoExtension}.bin'; set exit_code $status; set_color cyan; printf \"\nProcess exited with code: %d (0x%X)\n\" $exit_code $exit_code; set_color normal; end; else; set_color red; echo \"[-] Error: '${fileBasename}' is not a C/C++ source file!\"; set_color normal; end",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "echo": false,
+        "reveal": "always",
+        "focus": true,
+        "panel": "shared",
+        "showReuseMessage": false,
+        "clear": true
+      },
+      "problemMatcher": ["$gcc"]
+    }
+  ]
+}
