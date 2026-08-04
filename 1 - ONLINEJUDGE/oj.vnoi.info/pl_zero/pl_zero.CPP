@@ -34,14 +34,60 @@ void File(const string &fileName = "")
     }
 }
 
+int N;
+
 void Read()
 {
-    
+    cin >> N;
 }
+
+vector<pii> divs(int num)
+{
+    vector<pii> tmp;
+    for (int i = 1; i * i <= num; i++)
+    {
+        if (num % i == 0)
+        {
+            tmp.pb({i, num / i});
+        }
+    }
+    return tmp;
+}
+
+vector<bool> visited;
 
 void Solve()
 {
-    
+    set<int> st;
+    visited.assign(N + 1, false);
+    queue<vector<pii>> q;
+    visited[N] = true;
+    q.push(divs(N));
+    while(!q.empty())
+    {
+        vector<pii> cur = q.front();
+        q.pop();
+        for (auto i : cur)
+        {
+            int x = i.fi, y = i.se, cal = (x - 1) * (y + 1);
+            st.insert(cal);
+            if (cal != 0)
+            {
+                if (!visited[cal])
+                {
+                    q.push(divs(cal));
+                    visited[cal] = true;
+                }
+            }
+        }
+    }
+    cout << sz(st) << endl;
+    while(st.size())
+    {
+        auto it = st.begin();
+        cout << *it << ' ';
+        st.erase(it);
+    }
 }
 
 int main() 
