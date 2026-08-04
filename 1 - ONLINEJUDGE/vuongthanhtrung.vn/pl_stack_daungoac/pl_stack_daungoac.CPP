@@ -34,41 +34,51 @@ void File(const string &fileName = "")
     }
 }
 
-int N, K;
+int n;
+string bracket;
 
 void Read()
 {
-    cin >> N >> K;
+    cin >> n;
+    cin >> bracket;
 }
 
 void Solve()
 {
-    int cnt = 0;
-    queue<int> q;
-    q.push(N);
-    while(!q.empty())
+    stack<char> st;
+    FOR(i, 0, n - 1)
     {
-        int cur = q.front();
-        q.pop();
-        if (cur > K && (cur + K) % 2 == 0)
+        if (bracket[i] == '(')
         {
-            int fi = (cur + K) / 2;
-            int se = cur - fi;
-            q.push(fi);
-            q.push(se);
+            st.push(bracket[i]);
         }
         else
         {
-            cnt++;
+            if (!st.empty())
+            {
+                st.pop();
+            }
+            else
+            {
+                cout << "NO";
+                return;
+            }
         }
     }
-    cout << cnt;
+    if (st.empty())
+    {
+        cout << "YES";
+    }
+    else
+    {
+        cout << "NO";
+    }
 }
 
 int main() 
 {
     fixIO();
-    File("DANBO");
+    File("DAUNGOAC");
     Read();
     Solve();
     return 0;

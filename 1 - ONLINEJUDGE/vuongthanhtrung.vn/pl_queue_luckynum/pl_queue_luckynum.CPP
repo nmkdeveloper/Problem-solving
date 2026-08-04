@@ -34,41 +34,66 @@ void File(const string &fileName = "")
     }
 }
 
-int N, K;
+const int N = 205;
+int k;
+int f[N][N];
+int mu[N];
 
 void Read()
 {
-    cin >> N >> K;
+    cin >> k;
 }
 
 void Solve()
 {
-    int cnt = 0;
-    queue<int> q;
-    q.push(N);
-    while(!q.empty())
+    FOR(i, 0, 200)
     {
-        int cur = q.front();
-        q.pop();
-        if (cur > K && (cur + K) % 2 == 0)
+        FOR(j, 0, 200 - i)
         {
-            int fi = (cur + K) / 2;
-            int se = cur - fi;
-            q.push(fi);
-            q.push(se);
-        }
-        else
-        {
-            cnt++;
+            f[i][j] = -1;
         }
     }
-    cout << cnt;
+    mu[0] = 1 % k;
+    FOR(i, 1, 200)
+    {
+        mu[i] = (mu[i - 1] * 10) % k;
+    }
+    queue<pii> q;
+    q.push({0, 1});
+    f[0][1] = 6 % k;
+    q.push({1, 0});
+    f[1][0] = 8 % k;
+    while (sz(q))
+    {
+        int x = q.front().fi;
+        int y = q.front().se;
+        q.pop();
+        if (f[x][y] == 0)
+        {
+            FOR(i, 1, x) cout << 8;
+            FOR(i, 1, y) cout << 6;
+            cout << endl;
+            return;
+        }
+        if (x + y == 200) continue;
+        if (f[x][y + 1] == -1)
+        {
+            f[x][y + 1] = (f[x][y] * 10 + 6) % k;
+            q.push({x, y + 1});
+        }
+        if (f[x + 1][y] == -1)
+        {
+            f[x + 1][y] = (8 * mu[x + y] + f[x][y]) % k;
+            q.push({x + 1, y});
+        }
+    }
+    cout << -1;
 }
 
 int main() 
 {
     fixIO();
-    File("DANBO");
+    File("LUCKYNUM");
     Read();
     Solve();
     return 0;
@@ -80,5 +105,5 @@ int main()
  *                              — Xuan Dieu
  *
  *  Code by   : Nguyen Minh Khoi (github/nmkdeveloper)
- *  Created   : 2026.08.02
+ *  Created   : 2026.08.03
  */

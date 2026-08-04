@@ -34,41 +34,42 @@ void File(const string &fileName = "")
     }
 }
 
-int N, K;
+string s;
 
 void Read()
 {
-    cin >> N >> K;
+    cin >> s;
+}
+
+int get_val(char c)
+{
+    if (c == 'C')
+    {
+        return 12;
+    }
+    if (c == 'H')
+    {
+        return 1;
+    }
+    return 16;
 }
 
 void Solve()
 {
-    int cnt = 0;
-    queue<int> q;
-    q.push(N);
-    while(!q.empty())
+    int res = 0;
+    for (auto c : s)
     {
-        int cur = q.front();
-        q.pop();
-        if (cur > K && (cur + K) % 2 == 0)
+        if (c == '(')
         {
-            int fi = (cur + K) / 2;
-            int se = cur - fi;
-            q.push(fi);
-            q.push(se);
-        }
-        else
-        {
-            cnt++;
+
         }
     }
-    cout << cnt;
 }
 
 int main() 
 {
     fixIO();
-    File("DANBO");
+    File("HOACHAT");
     Read();
     Solve();
     return 0;

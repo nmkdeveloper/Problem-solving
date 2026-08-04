@@ -34,41 +34,62 @@ void File(const string &fileName = "")
     }
 }
 
-int N, K;
+int n;
+unordered_map<string, vector<string>> prepa;
+unordered_map<string, bool> visited;
+unordered_map<string, int> dist;
+string A, B;
 
 void Read()
 {
-    cin >> N >> K;
+    cin >> n;
+    FOR(i, 0, n - 1)
+    {
+        string a, b, c;
+        cin >> a >> b >> c;
+        prepa[a].pb(c);
+        visited[a] = visited[c] = false;
+        dist[a] = dist[c] = -1;
+    }
+    cin >> A;
+    cin >> B;
+    visited[A] = visited[B] = false;
 }
 
 void Solve()
 {
-    int cnt = 0;
-    queue<int> q;
-    q.push(N);
-    while(!q.empty())
+    queue<string> q;
+    q.push(A);
+    visited[A] = true;
+    dist[A] = 0;
+    while(q.size())
     {
-        int cur = q.front();
+        string u = q.front();
         q.pop();
-        if (cur > K && (cur + K) % 2 == 0)
+        for (auto v : prepa[u])
         {
-            int fi = (cur + K) / 2;
-            int se = cur - fi;
-            q.push(fi);
-            q.push(se);
-        }
-        else
-        {
-            cnt++;
+            if (!visited[v])
+            {
+                visited[v] = true;
+                dist[v] = dist[u] + 1;
+                q.push(v);
+            }
         }
     }
-    cout << cnt;
+    if (!visited[B])
+    {
+        cout << -1;
+    }
+    else
+    {
+        cout << dist[B];
+    }
 }
 
 int main() 
 {
     fixIO();
-    File("DANBO");
+    File("ALCHEMY");
     Read();
     Solve();
     return 0;

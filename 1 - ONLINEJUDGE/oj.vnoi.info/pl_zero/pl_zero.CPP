@@ -34,41 +34,20 @@ void File(const string &fileName = "")
     }
 }
 
-int N, K;
-
 void Read()
 {
-    cin >> N >> K;
+    
 }
 
 void Solve()
 {
-    int cnt = 0;
-    queue<int> q;
-    q.push(N);
-    while(!q.empty())
-    {
-        int cur = q.front();
-        q.pop();
-        if (cur > K && (cur + K) % 2 == 0)
-        {
-            int fi = (cur + K) / 2;
-            int se = cur - fi;
-            q.push(fi);
-            q.push(se);
-        }
-        else
-        {
-            cnt++;
-        }
-    }
-    cout << cnt;
+    
 }
 
 int main() 
 {
     fixIO();
-    File("DANBO");
+    File("ZERO");
     Read();
     Solve();
     return 0;
