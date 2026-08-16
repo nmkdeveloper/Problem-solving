@@ -1,0 +1,34 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build & Run C++ / Pascal / Python",
+            "type": "process",
+            "command": "${workspaceFolder}/.vscode/.venv/bin/python",
+            "windows": {
+                "command": "${workspaceFolder}/.vscode/venv/Scripts/python.exe"
+            },
+            "args": [
+                "${workspaceFolder}/.vscode/runner.py"
+            ],
+            "options": {
+                "env": {
+                    "TARGET_FILE": "${file}"
+                }
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": false,
+                "reveal": "never",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": true
+            },
+            "problemMatcher": []
+        }
+    ]
+}
