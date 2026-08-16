@@ -60,24 +60,34 @@ void File(const string &fileName = "")
 struct Edge
 {
     int v;
-    ll w;
+    int w;
 };
 
-struct Node{
-    int u;
-    ll Dist_U;
-};
-struct cmp
-{
-    bool operator() (Node a, Node b)
-    {
-        return a.Dist_U > b.Dist_U;
-    }
-};
-
-
+const int LOG = 17; // log_{2}(10000);
 int N, Q;
 vector<vector<Edge>> adj;
+vi parent, sizeset;
+
+int Find(int u)
+{
+    if (u == parent[u])
+    {
+        return u;
+    }
+    return parent[u] = Find(parent[u]);
+}
+
+void Unite(int u, int v)
+{
+    int root_u = Find(u);
+    int root_v = Find(v);
+    if (sizeset[root_u] < sizeset[root_v])
+    {
+        swap(root_u, root_v);
+    }
+    parent[root_v] = root_u;
+    sizeset[root_u] += sizeset[root_v];
+}
 
 void Read()
 {
@@ -85,95 +95,158 @@ void Read()
     adj.resize(N + 1);
     FOR(i, 1, N - 1)
     {
-        int u, v;
-        ll w;
+        int u, v, w;
         cin >> u >> v >> w;
         adj[u].pb({v, w});
         adj[v].pb({u, w});
     }
 }
 
-ll Dijkstra(int s, int t, const vb& visited)
+vi depth;
+vector<vi> minedge, up;
+
+void DFS(int u, int p, int w)
 {
-    if (visited[s] || visited[t])
+    up[u][0] = p;
+    minedge[u][0] = w;
+    FOR(k, 1, LOG)
     {
-        return -1;
+        up[u][k] = up[up[u][k - 1]][k - 1];
+        minedge[u][k] = min(minedge[u][k - 1], minedge[up[u][k - 1]][k - 1]);
     }
-    if (s == t)
+    for (auto e : adj[u])
+    {
+        int v = e.v;
+        int w = e.w;
+        if (v != p)
+        {
+            depth[v] = depth[u] + 1;
+            DFS(v, u, w);
+        }
+    }
+}
+
+int LCA(int u, int v)
+{
+    if (u == v)
     {
         return 0;
     }
-    ll Min_weight = INF64;
-    vll Dist(N + 1, INF64);
-    vi Parrent(N + 1, -1);
-    vll etop(N + 1, INF64);
-    vb done(N + 1, false);
-    Dist[s] = 0;
-    priority_queue<Node, vector<Node>, cmp> pq;
-    pq.push({s,Dist[s]});
-    while(pq.size())
+    int ans = INF;
+    if (depth[u] < depth[v])
     {
-        Node x = pq.top();
-        pq.pop();
-        int u = x.u; 
-        if (done[u])
+        swap(u, v);
+    }
+    FORD(k, LOG, 0)
+    {
+        if (depth[u] - (1 << k) >= depth[v])
         {
-            continue;
-        }
-        done[u] = true;
-        if (u == t)
-        {
-            break;
-        }
-        for (auto e : adj[u])
-        {
-            int v = e.v;
-            ll w = e.w;
-            if (visited[v] || done[v])
-            {
-                continue;
-            }
-            if (Dist[v] > Dist[u] + w)
-            {
-                Dist[v] = Dist[u] + w;
-                pq.push({v, Dist[v]});
-                Parrent[v] = u;
-                etop[v] = w;
-            }
+            ans = min(ans, minedge[u][k]);
+            u = up[u][k];
         }
     }
-    if (!done[t])
+    if (u == v)
     {
-        return -1;
+        return ans;
     }
-    int curr = t;
-    while (curr != s)
+    FORD(k, LOG, 0)
     {
-        Min_weight = min(Min_weight, etop[curr]);
-        curr = Parrent[curr];
+        if (up[u][k] != up[v][k])
+        {
+            ans = min(ans, minedge[u][k]);
+            ans = min(ans, minedge[v][k]);
+            u = up[u][k];
+            v = up[v][k];
+        }
     }
-    return Min_weight;
+    ans = min(ans, minedge[u][0]);
+    ans = min(ans, minedge[v][0]);
+    return ans;
+}
+
+vb Removed;
+
+void Restore(int x)
+{
+    Removed[x] = false;
+    for (auto e : adj[x])
+    {
+        int v = e.v;
+        if (!Removed[v])
+        {
+            Unite(x, v);
+        }
+    }
 }
 
 void Solve()
 {
-    vb Visited(N + 1, false);
-    while(Q--)
+    Removed.resize(N + 1, false);
+    sizeset.resize(N + 1, 1);
+    parent.resize(N + 1);
+    iota(all(parent), 0);
+    depth.resize(N + 1);
+    minedge.resize(N + 1, vi(LOG + 1));
+    up.resize(N + 1, vi(LOG + 1));
+    stack<pair<int, pii>> st;
+    DFS(1, 1, INF);
+    FOR(i, 1, Q)
     {
-        int q;
-        cin >> q;
-        if (q == 1)
+        int t;
+        cin >> t;
+        if (t == 1)
         {
             int u, v;
             cin >> u >> v;
-            cout << Dijkstra(u, v, Visited) << endl;
+            st.push({t, {u, v}});
         }
         else
         {
             int u;
             cin >> u;
-            Visited[u] = true;
+            st.push({t, {u, 0}});
+            Removed[u] = true;
         }
+    }
+    FOR(u, 1, N)
+    {
+        if (!Removed[u])
+        {
+            for (auto e : adj[u])
+            {
+                int v = e.v;
+                if (!Removed[v])
+                {
+                    Unite(u, v);
+                }
+            }
+        }
+    }
+    vi res;
+    while(st.size())
+    {
+        pair<int, pii> query = st.top();
+        st.pop();
+        if (query.fi == 1)
+        {
+            if (Removed[query.se.fi] || Removed[query.se.se] || Find(query.se.fi) != Find(query.se.se))
+            {
+                res.pb(-1);
+            }
+            else
+            {
+                res.pb(LCA(query.se.fi, query.se.se));
+            }
+        }
+        else
+        {
+            Restore(query.se.fi);
+        }
+    }
+    reverse(all(res));
+    for (int val : res)
+    {
+        cout << val << endl;
     }
 }
 

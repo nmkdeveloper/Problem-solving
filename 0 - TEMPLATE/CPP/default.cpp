@@ -25,7 +25,7 @@ typedef priority_queue<ll, vll, greater<ll>> min_heap_ll;
 
 #define FOR(a, b, c) for (int a = (b); a <= (c); a++)
 #define FORD(a, b, c) for (int a = (b); a >= (c); a--)
-#define REP(i, n) for (int i = 0; i < (n); i++)sudo apt install python-is-python3
+#define REP(i, n) for (int i = 0; i < (n); i++)
 #define REPD(i, n) for (int i = (n) - 1; i >= 0; i--)
 #define endl '\n'
 #define fi first
@@ -36,7 +36,7 @@ typedef priority_queue<ll, vll, greater<ll>> min_heap_ll;
 #define rall(x) (x).rbegin(), (x).rend()
 #define sz(x) (int)(x).size()
 
-const int MAXN = 1e7 + 15;
+const int MAXARR = 1e7 + 15;
 const int INF = 1e9 + 7;
 const ll INF64 = 2e18 + 7;
 const int MOD = 1e9 + 7;

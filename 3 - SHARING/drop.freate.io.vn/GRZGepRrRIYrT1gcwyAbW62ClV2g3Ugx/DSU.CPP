@@ -58,84 +58,60 @@ void File(const string &fileName = "")
     }
 }
 
-const int MAXN = 1e5 + 15;
-const int MAXK = 21; // MAXK =  log_{2}(N) ~ 16,6 -> 20
 int N, M;
 vector<vi> adj;
+vi parent, sizeunion;
+
+int Find(int u)
+{
+    if (u == parent[u])
+    {
+        return u;
+    }
+    return parent[u] = Find(parent[u]);
+}
+
+bool Unite(int u, int v)
+{
+    int root_u = Find(u), root_v = Find(v);
+    if (root_u == root_v) return false;
+    if (sizeunion[root_u] < sizeunion[root_v])
+    {
+        swap(root_u, root_v);
+    }
+    parent[root_v] = root_u;
+    sizeunion[root_u] += sizeunion[root_v];
+    return true;
+}
 
 void Read()
 {
     cin >> N >> M;
     adj.resize(N + 1);
+    parent.resize(N + 1);
+    sizeunion.resize(N + 1, 1);
+    iota(all(parent), 0);
     FOR(i, 1, M)
     {
         int u, v;
         cin >> u >> v;
         adj[u].pb(v);
         adj[v].pb(u);
+        Unite(u, v);
     }
-}
-
-vector<vi> up(MAXN, vi(MAXK, 0));
-vi depth(MAXN, 0);
-
-
-void DFS(int u, int p)
-{
-    up[u][0] = p;
-    FOR(k, 1, MAXK - 1)
-    {
-        up[u][k] = up[up[u][k - 1]][k - 1];
-    }
-    for (auto v : adj[u])
-    {
-        if (v != p)
-        {
-            depth[v] = depth[u] + 1;
-            DFS(v, u);
-        }
-    }
-}
-
-int LCA(int u, int v)
-{
-    if (depth[u] < depth[v])
-    {
-        swap(u, v);
-    }
-    FORD(k, MAXK - 1, 0)
-    {
-        if (depth[u] - (1 << k) >= depth[v])
-        {
-            u = up[u][k];
-        }
-    }
-    if (u == v)
-    {
-        return u;
-    }
-    FORD(k, MAXK - 1, 0)
-    {
-        if (up[u][k] != up[v][k])
-        {
-            u = up[u][k];
-            v = up[v][k];
-        }
-    }
-    return up[u][0];
 }
 
 void Solve()
 {
-    depth[1] = 0;
-    DFS(1, 1);
-    cout << LCA(7, 5);
+    cout << Find(3) << endl;
+    Unite(10, 3);
+    cout << Find(10);
 }
 
 int main() 
 {
     fixIO();
-    File("LCA");
+    File("DSU");
     Read();
     Solve();
     return 0;
