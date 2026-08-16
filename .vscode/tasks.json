@@ -4,12 +4,9 @@
         {
             "label": "Build & Run C++ / Pascal / Python",
             "type": "process",
-            "command": "${workspaceFolder}/.vscode/.venv/bin/python",
-            "windows": {
-                "command": "${workspaceFolder}/.vscode/venv/Scripts/python.exe"
-            },
+            "command": "python",
             "args": [
-                "${workspaceFolder}/.vscode/runner.py"
+                "${workspaceFolder}/.vscode/run.py"
             ],
             "options": {
                 "env": {
