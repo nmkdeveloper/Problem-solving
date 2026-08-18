@@ -58,20 +58,97 @@ void File(const string &fileName = "")
     }
 }
 
+struct Edge
+{
+    int u;
+    int v;
+    ll w;
+};
+
+int N, M;
+vector<Edge> adj;
+vi parent,ussize;
+
 void Read()
 {
-    
+    cin >> N >> M;
+    parent.resize(N + 1);
+    ussize.resize(N + 1, 1);
+    iota(all(parent), 0);
+    FOR(i, 1, M)
+    {
+        int u, v;
+        ll w;
+        cin >> u >> v >> w;
+        adj.pb({u, v, w});
+    }
+}
+
+int Find(int u)
+{
+    if (u == parent[u])
+    {
+        return u;
+    }
+    return parent[u] = Find(parent[u]);
+}
+
+bool DSU(int u, int v)
+{
+    int root_u = Find(u);
+    int root_v = Find(v);
+    if (root_u == root_v)
+    {
+        return false;
+    }
+    if (ussize[root_u] < ussize[root_v])
+    {
+        swap(root_u, root_v);
+    }
+    parent[root_v] = root_u;
+    ussize[root_u] += ussize[root_v];
+    return true;
+}
+
+bool cmp(Edge a, Edge b)
+{
+    return a.w < b.w;
 }
 
 void Solve()
 {
-    
+    sort(all(adj), cmp);
+    int cnt = 0;
+    ll total = 0;
+    for (auto e : adj)
+    {
+        int u = e.u;
+        int v = e.v;
+        ll w = e.w;
+        if (DSU(u, v))
+        {
+            total += w;
+            cnt++;
+        }
+        if (cnt == N - 1)
+        {
+            break;
+        }
+    }
+    if (cnt == N - 1)
+    {
+        cout << total;
+    }
+    else
+    {
+        cout << -1;
+    }
 }
 
 int main() 
 {
     fixIO();
-    File("");
+    File("Kruskal");
     Read();
     Solve();
     return 0;
@@ -82,7 +159,7 @@ int main()
  *   Himmel:  Cung khong co gi to tac, do la hay thay doi cuoc doi cua ai do 
  *            du chi mot chut. Toi thay chi can nhu vay la du roi."
  *
- *                                                   - Sousou no Frieren -
+ *                                                   — Sousou no Frieren —
  *  =======================================================================
  *  Template by : Nguyen Minh Khoi (github/nmkdeveloper)
  *  Created     : 2026.08.11

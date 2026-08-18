@@ -58,22 +58,77 @@ void File(const string &fileName = "")
     }
 }
 
-void Read()
-{
-    
-}
+int t;
 
-void Solve()
+void ReadSolve()
 {
-    
+    cin >> t;
+    while(t--)
+    {
+        vb had(128, false);
+        int n, m;
+        cin >> n >> m;
+        FOR(i, 1, n)
+        {
+            string s;
+            cin >> s;
+            had[toupper(s[0])] = true;
+        }
+        vs a(m);
+        REP(i, m)
+        {
+            cin >> a[i];
+        }
+        vb ct(m, false);
+        int cnt = 0;
+
+        while(true)
+        {
+            bool changed = false;
+            REP(i, m)
+            {
+                if (ct[i])
+                {
+                    continue;
+                }
+                bool cm = true;
+                for (auto c : a[i])
+                {
+                    if (!had[c])
+                    {
+                        cm = false;
+                        break;
+                    }
+                }
+                if (cm)
+                {
+                    ct[i] = true;
+                    had[a[i][0]] = true;
+                    cnt++;
+                    changed = true;
+                }
+            }
+            if (!changed)
+            {
+                break;
+            }
+        }
+        if (cnt == m)
+        {
+            cout << "YES" << endl;
+        }
+        else
+        {
+            cout << "NO" << endl;
+        }
+    }
 }
 
 int main() 
 {
     fixIO();
-    File("");
-    Read();
-    Solve();
+    File("2257A");
+    ReadSolve();
     return 0;
 }
 
@@ -82,7 +137,7 @@ int main()
  *   Himmel:  Cung khong co gi to tac, do la hay thay doi cuoc doi cua ai do 
  *            du chi mot chut. Toi thay chi can nhu vay la du roi."
  *
- *                                                   - Sousou no Frieren -
+ *                                                   — Sousou no Frieren —
  *  =======================================================================
  *  Template by : Nguyen Minh Khoi (github/nmkdeveloper)
  *  Created     : 2026.08.11

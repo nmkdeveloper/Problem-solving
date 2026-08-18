@@ -58,22 +58,41 @@ void File(const string &fileName = "")
     }
 }
 
-void Read()
+void ReadSolve()
 {
-    
-}
-
-void Solve()
-{
-    
+    int t;
+    cin >> t;
+    while(t --)
+    {
+        int n, m;
+        cin >> n >> m;
+        vll a(n), b(m);
+        REP(i, n)
+        {
+            cin >> a[i];
+        }
+        REP(i, m)
+        {
+            cin >> b[i];
+        }
+        ll sa = a[0] + (n - 1);
+        ll sb = b[0] + (m - 1);
+        if (sa >= sb)
+        {
+            cout << 1 << endl;
+        }
+        else
+        {
+            cout << 2 << endl;
+        }
+    }
 }
 
 int main() 
 {
     fixIO();
-    File("");
-    Read();
-    Solve();
+    File("2257B");
+    ReadSolve();
     return 0;
 }
 
@@ -82,7 +101,7 @@ int main()
  *   Himmel:  Cung khong co gi to tac, do la hay thay doi cuoc doi cua ai do 
  *            du chi mot chut. Toi thay chi can nhu vay la du roi."
  *
- *                                                   - Sousou no Frieren -
+ *                                                   — Sousou no Frieren —
  *  =======================================================================
  *  Template by : Nguyen Minh Khoi (github/nmkdeveloper)
  *  Created     : 2026.08.11
