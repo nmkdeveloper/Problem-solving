@@ -10,16 +10,3 @@
 !*.[pP][yY]
 !*.[mM][dD]
 !*.txt
-!.vscode/*.py
-!.vscode/*.txt
-!.vscode/*.ttf
-!.vscode/*.ico
-!.vscode/tasks.json
-.vscode/c_cpp_properties.json
-.vscode/launch.json
-.vscode/settings.json
-.vscode/venv/
-.vscode/.venv/
-.vscode/.pytest_cache/
-__pycache__/
-*.pyc
