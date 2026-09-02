@@ -1,5 +1,4 @@
 # C++ build artifacts
-# C++ build artifacts
 *.o
 *.obj
 *.out
@@ -28,6 +27,11 @@ CMakeCache.txt
 *.[Aa][Nn][Ss]
 
 # IDE and editor files
+*.cbp
+*.depend
+*.layout
+__pycache__/
+*.pyc
 .vscode/
 .idea/
 *.code-workspace
