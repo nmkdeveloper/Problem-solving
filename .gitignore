@@ -1,12 +1,39 @@
-*
-!**/
-!.gitignore
-!*.[cC][pP][pP]
-!*.[cC][cC]
-!*.[cC]
-!*.[hH]
-!*.[hH][pP][pP]
-!*.[pP][aA][sS]
-!*.[pP][yY]
-!*.[mM][dD]
-!*.txt
+# C++ build artifacts
+# C++ build artifacts
+*.o
+*.obj
+*.out
+*.exe
+*.ilk
+*.pdb
+*.so
+*.dll
+*.dylib
+*.a
+*.lib
+*.bin
+build/
+bin/
+obj/
+Debug/
+Release/
+.vs/
+CMakeFiles/
+CMakeCache.txt
+
+# Online judge input and output files
+*.[Ii][Nn]
+*.[Ii][Nn][Pp]
+*.[Oo][Uu][Tt]
+*.[Aa][Nn][Ss]
+
+# IDE and editor files
+.vscode/
+.idea/
+*.code-workspace
+*.swp
+*.swo
+
+# Operating system files
+.DS_Store
+Thumbs.db
