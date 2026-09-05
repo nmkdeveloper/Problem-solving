@@ -8,6 +8,7 @@
     "1 - ONLINEJUDGE/claoj.edu.vn/dfs_01/dfs_01.CPP",
     "1 - ONLINEJUDGE/codeforces.com/1020B/1020B.CPP",
     "1 - ONLINEJUDGE/codeforces.com/1057A/1057A.CPP",
+    "1 - ONLINEJUDGE/codeforces.com/115A/115A.CPP",
     "1 - ONLINEJUDGE/codeforces.com/118A/118A.CPP",
     "1 - ONLINEJUDGE/codeforces.com/1249B1/1249B1.CPP",
     "1 - ONLINEJUDGE/codeforces.com/131A/131A.CPP",
@@ -68,6 +69,7 @@
     "3 - SHARING/drop.freate.io.vn/GRZGepRrRIYrT1gcwyAbW62ClV2g3Ugx/DSU.CPP",
     "3 - SHARING/drop.freate.io.vn/MR0uHxAUczrIAuIVuDzGM7s3tHstnmX2/Kruskal.CPP",
     "3 - SHARING/drop.freate.io.vn/Z0saBtBIeGwYoJCuvLPO6ajn2D707veA/LCA.CPP",
+    "3 - SHARING/problem-solving.nmkdeveloper.io.vn/5h6VKi9N/tarjan.CPP",
     "4 - OTHERS/CPP/0/main.cpp",
     "4 - OTHERS/CPP/Build Error.CPP",
     "4 - OTHERS/CPP/Divide by Zero.CPP",
@@ -75,11 +77,13 @@
     "4 - OTHERS/CPP/Runtime Error.CPP",
     "4 - OTHERS/CPP/Stack Overflow.CPP",
     "4 - OTHERS/PS1/generate-solutions.ps1",
+    "CNAME",
     "CODE_OF_CONDUCT.md",
     "CONTRIBUTING.md",
     "favicon.ico",
     "index.html",
     "LICENSE",
     "logo.webp",
-    "README.md"
+    "README.md",
+    "solutions.json"
 ]
