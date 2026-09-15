@@ -78,7 +78,7 @@ void Solve()
 int main()
 {
     fixIO();
-    File("");
+    File("716634G");
     Read();
     Solve();
     return 0;

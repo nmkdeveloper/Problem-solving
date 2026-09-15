@@ -65,20 +65,71 @@ void File(const string &fileName = "")
     }
 }
 
+int n, m;
+string s;
+
 void Read()
 {
-
+    cin >> n >> m;
+    cin >> s;
 }
 
 void Solve()
 {
+    int c[20][20];
+    memset(c, 0, sizeof(c));
+    ll dp[1 << 20];
+    for (int i = 0; i + 1 < n; i ++)
+    {
+        int u = s[i] - 'a';
+        int v = s[i + 1] - 'a';
+        if (u != v)
+        {
+            c[u][v] ++;
+            c[v][u] ++;
+        }
+    }
+    int f = 1 << m;
+    REP(mask, f)
+    {
+        dp[mask] = INF64;
+    }
+    dp[0] = 0;
+    REP(mask, f)
+    {
+        if (dp[mask] >= INF64)
+        {
+            continue;
+        }
+        int k = __builtin_popcount(mask);
+        REP(j, m)
+        {
 
+            if (CHECK(j, mask))
+            {
+                continue;
+            }
+            ll add = 0;
+            int pos = 0;
+            REP(i, m)
+            {
+                if (CHECK(i, mask))
+                {
+                    add += 1LL * c[i][j] * (k - pos);
+                    pos ++;
+                }
+            }
+            int nmask = mask | BIT(j);
+            dp[nmask] = min(dp[nmask], dp[mask] + add);
+        }
+    }
+    cout << dp[f - 1];
 }
 
 int main()
 {
     fixIO();
-    File("");
+    File("716389C");
     Read();
     Solve();
     return 0;

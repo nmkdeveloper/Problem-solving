@@ -36,7 +36,7 @@ typedef priority_queue<ll, vll, greater<ll>> min_heap_ll;
 #define rall(x) (x).rbegin(), (x).rend()
 #define sz(x) (int)(x).size()
 
-#define BIT(n) (1 << (n))
+#define BIT(n) (1UL << (n))
 #define SET(k, n) ((n) | BIT(k))
 #define CLEAR(k, n) ((n) & ~BIT(k))
 #define TOGGLE(k, n) ((n) ^ BIT(k))
@@ -65,20 +65,117 @@ void File(const string &fileName = "")
     }
 }
 
+int n, k;
+vector<vll> c;
+vector<vector<pil>> adj;
+
 void Read()
 {
+    cin >> n >> k;
+    c.resize(n, vll(n));
+    adj.resize(n);
+    REP(i, n)
+    {
+        REP(j, n)
+        {
+            cin >> c[i][j];
+            if (i != j)
+            {
+                adj[i].pb({j, c[i][j]});
+            }
+        }
+    }
+}
 
+vll Dijikstra(int s)
+{
+    vll Dist(n, INF64);
+    priority_queue<pli, vector<pli>, greater<pli>> pq;
+    Dist[s] = 0;
+    pq.push({0, s});
+    while (sz(pq))
+    {
+        auto [d, u] = pq.top();
+        pq.pop();
+        if (d > Dist[u])
+            continue;
+        for (auto [v, w] : adj[u])
+        {
+            if (Dist[u] + w < Dist[v])
+            {
+                Dist[v] = Dist[u] + w;
+                pq.push({Dist[v], v});
+            }
+        }
+    }
+    return Dist;
 }
 
 void Solve()
 {
-
+    vi ord(k);
+    REP(i, k)
+    {
+        cin >> ord[i];
+        ord[i] --;
+    }
+    vi imp;
+    imp.pb(0);
+    for (auto x : ord)
+    {
+        imp.pb(x);
+    }
+    int m = k + 1;
+    vector<vll> d(m, vll(m, INF64));
+    REP(i, m)
+    {
+        vll Dist = Dijikstra(imp[i]);
+        REP(j, m)
+        {
+            d[i][j] = Dist[imp[j]];
+        }
+    }
+    int f = (1 << k) - 1;
+    vector<vll> dp(1 << k, vll(k + 1, INF64));
+    FOR(i, 1, k)
+    {
+        dp[BIT(i - 1)][i] = d[0][i];
+    }
+    FOR(mask, 1, f)
+    {
+        FOR(i, 1, k)
+        {
+            if (!CHECK(i - 1, mask))
+            {
+                continue;
+            }
+            if (dp[mask][i] == INF64)
+            {
+                continue;
+            }
+            FOR(j, 1, k)
+            {
+                if (CHECK(j - 1, mask))
+                {
+                    continue;
+                }
+                int nmask = SET(j - 1, mask);
+                dp[nmask][j] = min(dp[nmask][j], dp[mask][i] + d[i][j]);
+            }
+        }
+    }
+    ll ans = INF64;
+    FOR(i, 1, k)
+    {
+        ans = min(ans, dp[f][i] + d[i][0]);
+    }
+    cout << ans;
 }
 
 int main()
 {
     fixIO();
-    File("");
+    File("716389B");
     Read();
     Solve();
     return 0;

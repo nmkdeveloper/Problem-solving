@@ -65,20 +65,89 @@ void File(const string &fileName = "")
     }
 }
 
+string s;
+int q;
+
 void Read()
 {
+    cin >> s;
+    cin >> q;
+}
 
+struct Node
+{
+    int t;
+    int o;
+    int c;
+};
+
+vector<Node> Seg(4000007);
+
+Node Merge(const Node &left, const Node &right)
+{
+    Node res;
+    int tmp = min(left.o, right.c);
+    res.t = left.t + right.t + tmp;
+    res.o = left.o + right.o - tmp;
+    res.c = left.c + right.c - tmp;
+    return res;
+}
+
+void Build(int id, int left, int right)
+{
+    if (left == right)
+    {
+        if (s[left] == '(')
+        {
+            Seg[id] = {0, 1, 0};
+        }
+        else
+        {
+            Seg[id] = {0, 0, 1};
+        }
+        return;
+    }
+    int mid = (left + right) / 2;
+    Build(id * 2, left, mid);
+    Build(id * 2 + 1, mid + 1, right);
+    Seg[id] = Merge(Seg[id * 2], Seg[id * 2 + 1]);
+}
+
+Node Get(int id, int left, int right, int gleft, int gright)
+{
+    if (left > gright || right < gleft)
+    {
+        return {0, 0, 0};
+    }
+    if (left >= gleft && right <= gright)
+    {
+        return Seg[id];
+    }
+    int mid = (left + right) / 2;
+    Node resLeft = Get(id * 2, left, mid, gleft, gright);
+    Node resRight = Get(id * 2 + 1, mid + 1, right, gleft, gright);
+    return Merge(resLeft, resRight);
 }
 
 void Solve()
 {
-
+    int n = sz(s);
+    Build(1, 0, n - 1);
+    while(q --)
+    {
+        int left, right;
+        cin >> left >> right;
+        left --;
+        right --;
+        Node ans = Get(1, 0, n - 1, left, right);
+        cout << ans.t * 2 << endl;
+    }
 }
 
-int main()
+int main()x
 {
     fixIO();
-    File("");
+    File("716634A");
     Read();
     Solve();
     return 0;

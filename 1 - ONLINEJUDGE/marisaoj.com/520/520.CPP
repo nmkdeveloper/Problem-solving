@@ -36,12 +36,11 @@ typedef priority_queue<ll, vll, greater<ll>> min_heap_ll;
 #define rall(x) (x).rbegin(), (x).rend()
 #define sz(x) (int)(x).size()
 
-#define BIT(n) (1 << (n))
-#define SET(k, n) ((n) | BIT(k))
+#define BIT(n) (1UL << (n))
+#define SET(k, n) ((n)  BIT(k))
 #define CLEAR(k, n) ((n) & ~BIT(k))
 #define TOGGLE(k, n) ((n) ^ BIT(k))
-#define CHECK(k, n) (!!((n) & BIT(k)))
-#define MSB(x) ((x) == 0 ? -1 : 63 - __builtin_clzll(x))
+#define CHECK(k, n) (!!((k) & BIT(n)))
 
 #define debug(x) clog << #x << " = " << (x) << endl
 
@@ -65,20 +64,43 @@ void File(const string &fileName = "")
     }
 }
 
+int q;
+
 void Read()
 {
-
+    cin >> q;
 }
 
 void Solve()
 {
-
+    while(q --)
+    {
+        ll mask = 0;
+        ll a, b;
+        cin >> a >> b;
+        FOR(i, 0, 14)
+        {
+            if (i <= 4)
+            {
+                mask = (mask & ~(1 << i)) | (((a ^ b) & (1 << i)));
+            }
+            else if (i<= 9)
+            {
+                mask = (mask & ~(1 << i)) | (((a & b) & (1 << i)));
+            }
+            else
+            {
+                mask = (mask & ~(1 << i)) | (((a | b) & (1 << i)));
+            }
+        }
+        cout << mask << endl;
+    }
 }
 
 int main()
 {
     fixIO();
-    File("");
+    File("520");
     Read();
     Solve();
     return 0;

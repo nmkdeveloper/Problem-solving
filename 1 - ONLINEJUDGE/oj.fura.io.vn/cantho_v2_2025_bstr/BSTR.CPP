@@ -36,19 +36,12 @@ typedef priority_queue<ll, vll, greater<ll>> min_heap_ll;
 #define rall(x) (x).rbegin(), (x).rend()
 #define sz(x) (int)(x).size()
 
-#define BIT(n) (1 << (n))
-#define SET(k, n) ((n) | BIT(k))
-#define CLEAR(k, n) ((n) & ~BIT(k))
-#define TOGGLE(k, n) ((n) ^ BIT(k))
-#define CHECK(k, n) (!!((n) & BIT(k)))
-#define MSB(x) ((x) == 0 ? -1 : 63 - __builtin_clzll(x))
-
-#define debug(x) clog << #x << " = " << (x) << endl
-
 const int MAXARR = 1e7 + 15;
 const int INF = 1e9 + 7;
 const ll INF64 = 2e18 + 7;
 const int MOD = 1e9 + 7;
+
+#define debug(x) clog << #x << " = " << (x) << endl
 
 void fixIO()
 {
@@ -65,9 +58,14 @@ void File(const string &fileName = "")
     }
 }
 
+int n;
+string a, b;
+
 void Read()
 {
-
+    cin >> n;
+    cin >> a;
+    cin >> b;
 }
 
 void Solve()
@@ -78,7 +76,7 @@ void Solve()
 int main()
 {
     fixIO();
-    File("");
+    File("BSTR");
     Read();
     Solve();
     return 0;
@@ -92,5 +90,5 @@ int main()
  *                                                   - Sousou no Frieren -
  *  =======================================================================
  *  Template by : Nguyen Minh Khoi (github/nmkdeveloper)
- *  Created     : 2026.09.14
+ *  Created     : 2026.08.11
  */

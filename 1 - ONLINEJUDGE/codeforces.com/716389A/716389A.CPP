@@ -36,7 +36,7 @@ typedef priority_queue<ll, vll, greater<ll>> min_heap_ll;
 #define rall(x) (x).rbegin(), (x).rend()
 #define sz(x) (int)(x).size()
 
-#define BIT(n) (1 << (n))
+#define BIT(n) (1UL << (n))
 #define SET(k, n) ((n) | BIT(k))
 #define CLEAR(k, n) ((n) & ~BIT(k))
 #define TOGGLE(k, n) ((n) ^ BIT(k))
@@ -65,20 +65,56 @@ void File(const string &fileName = "")
     }
 }
 
+int n, m;
+
 void Read()
 {
+    cin >> n >> m;
+}
 
+int dp[1007][1 << 10];
+void Fill(int j, int r, int mask, int nmask)
+{
+    if (r == n)
+    {
+        dp[j + 1][nmask] = (dp[j + 1][nmask] + dp[j][mask]) % MOD;
+        return;
+    }
+    if (CHECK(r, mask))
+    {
+        Fill(j, r + 1, mask, nmask);
+    }
+    else
+    {
+        if (r + 1 < n && !CHECK(r + 1, mask))
+        {
+            Fill(j, r + 2, mask, nmask);
+        }
+        Fill(j, r + 1, mask, SET(r, nmask));
+    }
 }
 
 void Solve()
 {
-
+    dp[0][0] = 1;
+    REP(j, m)
+    {
+        REP(mask, (1 << n))
+        {
+            if (dp[j][mask] == 0)
+            {
+                continue;
+            }
+            Fill(j, 0, mask, 0);
+        }
+    }
+    cout << dp[m][0];
 }
 
 int main()
 {
     fixIO();
-    File("");
+    File("716389A");
     Read();
     Solve();
     return 0;

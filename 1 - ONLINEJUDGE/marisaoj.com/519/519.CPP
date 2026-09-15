@@ -36,19 +36,18 @@ typedef priority_queue<ll, vll, greater<ll>> min_heap_ll;
 #define rall(x) (x).rbegin(), (x).rend()
 #define sz(x) (int)(x).size()
 
-#define BIT(n) (1 << (n))
+#define BIT(n) (1UL << (n))
 #define SET(k, n) ((n) | BIT(k))
 #define CLEAR(k, n) ((n) & ~BIT(k))
 #define TOGGLE(k, n) ((n) ^ BIT(k))
-#define CHECK(k, n) (!!((n) & BIT(k)))
-#define MSB(x) ((x) == 0 ? -1 : 63 - __builtin_clzll(x))
-
-#define debug(x) clog << #x << " = " << (x) << endl
+#define CHECK(k, n) (!!((k) & BIT(n)))
 
 const int MAXARR = 1e7 + 15;
 const int INF = 1e9 + 7;
 const ll INF64 = 2e18 + 7;
 const int MOD = 1e9 + 7;
+
+#define debug(x) clog << #x << " = " << (x) << endl
 
 void fixIO()
 {
@@ -65,20 +64,40 @@ void File(const string &fileName = "")
     }
 }
 
+int q;
+
 void Read()
 {
-
+    cin >> q;
 }
 
 void Solve()
 {
-
+    ll n = 0;
+    while(q --)
+    {
+        int x, k;
+        cin >> x >> k;
+        if (x == 1)
+        {
+            n = SET(k, n);
+        }
+        else if (x == 2)
+        {
+            n = CLEAR(k, n);
+        }
+        else
+        {
+            n = TOGGLE(k, n);
+        }
+        cout << n << endl;
+    }
 }
 
 int main()
 {
     fixIO();
-    File("");
+    File("519");
     Read();
     Solve();
     return 0;
@@ -92,5 +111,5 @@ int main()
  *                                                   - Sousou no Frieren -
  *  =======================================================================
  *  Template by : Nguyen Minh Khoi (github/nmkdeveloper)
- *  Created     : 2026.09.14
+ *  Created     : 2026.08.11
  */

@@ -36,8 +36,8 @@ typedef priority_queue<ll, vll, greater<ll>> min_heap_ll;
 #define rall(x) (x).rbegin(), (x).rend()
 #define sz(x) (int)(x).size()
 
-#define BIT(n) (1 << (n))
-#define SET(k, n) ((n) | BIT(k))
+#define BIT(n) (1UL << (n))
+#define SET(k, n) ((n)  BIT(k))
 #define CLEAR(k, n) ((n) & ~BIT(k))
 #define TOGGLE(k, n) ((n) ^ BIT(k))
 #define CHECK(k, n) (!!((n) & BIT(k)))
@@ -65,20 +65,41 @@ void File(const string &fileName = "")
     }
 }
 
+int q;
+
 void Read()
 {
-
+    cin >> q;
 }
 
 void Solve()
 {
-
+    ll a = 0;
+    while(q --)
+    {
+        int t;
+        cin >> t;
+        if (t == 1)
+        {
+            ll x;
+            cin >> x;
+            a ^= x;
+        }
+        else if (t == 2)
+        {
+            a = a & ~(1 << MSB(a));
+        }
+        else
+        {
+            cout << __builtin_popcountll(a) << endl;
+        }
+    }
 }
 
 int main()
 {
     fixIO();
-    File("");
+    File("525");
     Read();
     Solve();
     return 0;
