@@ -65,14 +65,131 @@ void File(const string &fileName = "")
     }
 }
 
+const int MAXN = 2e5 + 7;
+int n, q;
+ll a[MAXN];
+
 void Read()
 {
+    cin >> n >> q;
+    FOR(i, 1, n)
+    {
+        cin >> a[i];
+    }
+}
 
+struct Node
+{
+    ll sum;
+    ll mn;
+    ll mvalue;
+    ll lazy;
+};
+
+Node Seg[4 * MAXN];
+
+void Build(int id, int left, int right)
+{
+    if (left == right)
+    {
+        Seg[id].sum = a[left];
+        Seg[id].mn = a[left];
+        Seg[id].mvalue = a[left];
+        Seg[id].lazy = 0;
+        return;
+    }
+    int mid = (left + right) / 2;
+    Build(id * 2, left, mid);
+    Build(id * 2 + 1, mid + 1, right);
+    Seg[id].sum = Seg[id * 2].sum + Seg[id * 2 + 1].sum;
+    Seg[id].mn = min(Seg[id * 2].mn, Seg[id * 2 + 1].mn);
+    Seg[id].mvalue = max(Seg[id * 2].mvalue, Seg[id * 2 + 1].mvalue);
+    Seg[id].lazy = 0;
+}
+
+void pushDown(int id, int left, int right)
+{
+    if (Seg[id].lazy == 0)
+    {
+        return;
+    }
+    ll value = Seg[id].lazy;
+    int mid = (left + right) / 2;
+    Seg[2 * id].sum = value * (mid - left + 1);
+    Seg[2 * id].mn = value;
+    Seg[2 * id].mvalue = value;
+    Seg[2 * id].lazy = value;
+    Seg[2 * id + 1].sum = value * (right - mid);
+    Seg[2 * id + 1].mn = value;
+    Seg[2 * id + 1].mvalue = value;
+    Seg[2 * id + 1].lazy = value;
+    Seg[id].lazy = 0;
+}
+
+void Update(int id, int left, int right, int uleft, int uright, ll value)
+{
+    if (uleft > right || uright < left || Seg[id].mn >= value)
+    {
+        return;
+    }
+    if (uleft <= left && right <= uright && Seg[id].mvalue <= value)
+    {
+        Seg[id].sum = value * (right - left + 1);
+        Seg[id].mn = value;
+        Seg[id].mvalue = value;
+        Seg[id].lazy = value;
+        return;
+    }
+    pushDown(id, left, right);
+    int mid = (left + right) / 2;
+    Update(2 * id, left, mid, uleft, uright, value);
+    Update(2 * id + 1, mid + 1, right, uleft, uright, value);
+    Seg[id].sum = Seg[id * 2].sum + Seg[id * 2 + 1].sum;
+    Seg[id].mn = min(Seg[id * 2].mn, Seg[id * 2 + 1].mn);
+    Seg[id].mvalue = max(Seg[id * 2].mvalue, Seg[id * 2 + 1].mvalue);
+}
+
+int Query(int id, int left, int right, int qleft, ll &money)
+{
+    if (right < qleft || Seg[id].mn > money)
+    {
+        return 0;
+    }
+    if (qleft <= left && Seg[id].sum <= money)
+    {
+        money -= Seg[id].sum;
+        return right - left + 1;
+    }
+    if (left == right)
+    {
+        return 0;
+    }
+    pushDown(id, left, right);
+    int mid = (left + right) / 2;
+    int ans = 0;
+    ans += Query(2 * id, left, mid, qleft, money);
+    ans += Query(2 * id + 1, mid + 1, right, qleft, money);
+    return ans;
 }
 
 void Solve()
 {
-
+    Build(1, 1, n);
+    while (q--)
+    {
+        int t, x;
+        ll y;
+        cin >> t >> x >> y;
+        if (t == 1)
+        {
+            Update(1, 1, n, 1, x, y);
+        }
+        else
+        {
+            ll ans = Query(1, 1, n, x, y);
+            cout << ans << endl;
+        }
+    }
 }
 
 int main()
