@@ -83,14 +83,3 @@ int main()
     Solve();
     return 0;
 }
-
-/**
- *  "Frieren: Vay theo cau chung ta phai lam gi de nguoi khac nho den chung ta chu?
- *   Himmel:  Cung khong co gi to tac, do la hay thay doi cuoc doi cua ai do
- *            du chi mot chut. Toi thay chi can nhu vay la du roi."
- *
- *                                                   - Sousou no Frieren -
- *  =======================================================================
- *  Template by : Nguyen Minh Khoi (github/nmkdeveloper)
- *  Created     : 2026.09.14
- */
