@@ -78,8 +78,13 @@ void Solve()
 int main()
 {
     fixIO();
-    File("SEQ05");
+    File("EULER");
     Read();
     Solve();
     return 0;
 }
+
+/*
+ * Code by github/nmkdeveloper.
+ * I didn't fall in love with you. I walked into love with you, with my eyes wide open, choosing to take every step along the way <3.
+ */

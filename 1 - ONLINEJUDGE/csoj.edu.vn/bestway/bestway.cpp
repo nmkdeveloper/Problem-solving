@@ -43,7 +43,7 @@ typedef priority_queue<ll, vll, greater<ll>> min_heap_ll;
 #define CHECK(k, n) (!!((n) & BIT(k)))
 #define MSB(x) ((x) == 0 ? -1 : 63 - __builtin_clzll(x))
 
-#define debug(x) clog <<  #x << " = " << (x) << endl
+#define debug(x) clog << #x << " = " << (x) << endl
 
 const int MAXARR = 1e7 + 15;
 const int INF = 1e9 + 7;
@@ -65,28 +65,57 @@ void File(const string &fileName = "")
     }
 }
 
-int m, n;
-vector<string> matrix;
+int n, m, s, t;
+vector<vi> adj;
 
 void Read()
 {
-	cin >> m >> n;
-	matrix.resize(m);
+	cin >> n >> m >> s >> t;
+	adj.resize(n + 1);
 	REP(i, m)
 	{
-		cin >> matrix[i];
+		int u, v;
+		cin >> u >> v;
+		adj[u].pb(v);
+		adj[v].pb(u);
 	}
 }
 
+vb visited;
+vi depth;
+
 void Solve()
 {
-	
+	visited.resize(n + 1, false);
+	depth.resize(n + 1, 0);
+	queue<int> q;
+	q.push(s);
+	visited[s] = true;
+	while(sz(q))
+	{
+		int u = q.front();
+		q.pop();
+		if (u == t)
+		{
+			break;
+		}
+		for(auto v : adj[u])
+		{
+			if (!visited[v])
+			{
+				visited[v] = true;
+				q.push(v);
+				depth[v] = depth[u] + 1;
+			}
+		}
+	}
+	cout << (visited[t] ? depth[t] : -1);
 }
 
 int main()
 {
     fixIO();
-    File("g_pushing");
+    File("bestway");
     Read();
     Solve();
     return 0;
@@ -94,6 +123,5 @@ int main()
 
 /*
  * Code by github/nmkdeveloper.
- * I love you as certain dark things are to be loved, in secret, between the shadow and the soul.
- * - Pablo Neruda, 100 Love Sonnets (Sonnet XVII) -
+ * I Love You, My Love <3
  */
