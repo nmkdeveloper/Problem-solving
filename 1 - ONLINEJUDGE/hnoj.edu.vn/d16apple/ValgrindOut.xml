@@ -1,0 +1,139 @@
+<?xml version="1.0"?>
+
+<valgrindoutput>
+
+<protocolversion>4</protocolversion>
+<protocoltool>memcheck</protocoltool>
+
+<preamble>
+  <line>Memcheck, a memory error detector</line>
+  <line>Copyright (C) 2002-2024, and GNU GPL'd, by Julian Seward et al.</line>
+  <line>Using Valgrind-3.25.1 and LibVEX; rerun with -h for copyright info</line>
+  <line>Command: /mnt/data/Workspaces/Github/nmkdeveloper/Problem-solving/1 - ONLINEJUDGE/hnoj.edu.vn/d16apple/bin/Debug/d16apple</line>
+</preamble>
+
+<pid>62323</pid>
+<ppid>6357</ppid>
+<tool>memcheck</tool>
+
+<args>
+  <vargv>
+    <exe>/usr/bin/valgrind</exe>
+    <arg>--leak-check=full</arg>
+    <arg>--track-origins=yes</arg>
+    <arg>--xml=yes</arg>
+    <arg>--xml-file=/mnt/data/Workspaces/Github/nmkdeveloper/Problem-solving/1 - ONLINEJUDGE/hnoj.edu.vn/d16apple/ValgrindOut.xml</arg>
+  </vargv>
+  <argv>
+    <exe>/mnt/data/Workspaces/Github/nmkdeveloper/Problem-solving/1 - ONLINEJUDGE/hnoj.edu.vn/d16apple/bin/Debug/d16apple</exe>
+  </argv>
+</args>
+
+<status>
+  <state>RUNNING</state>
+  <time>00:00:00:00.052 </time>
+</status>
+
+<fatal_signal>
+  <tid>1</tid>
+  <signo>6</signo>
+  <signame>SIGABRT</signame>
+  <sicode>-6</sicode>
+  <stack>
+    <frame>
+      <ip>0x51B9B8B</ip>
+      <obj>/usr/lib/libc.so.6</obj>
+      <fn>__pthread_kill_implementation</fn>
+      <dir>/usr/src/debug/glibc/glibc/nptl</dir>
+      <file>pthread_kill.c</file>
+      <line>44</line>
+    </frame>
+    <frame>
+      <ip>0x51B9B8B</ip>
+      <obj>/usr/lib/libc.so.6</obj>
+      <fn>__pthread_kill_internal</fn>
+      <dir>/usr/src/debug/glibc/glibc/nptl</dir>
+      <file>pthread_kill.c</file>
+      <line>89</line>
+    </frame>
+    <frame>
+      <ip>0x51B9B8B</ip>
+      <obj>/usr/lib/libc.so.6</obj>
+      <fn>pthread_kill@@GLIBC_2.34</fn>
+      <dir>/usr/src/debug/glibc/glibc/nptl</dir>
+      <file>pthread_kill.c</file>
+      <line>100</line>
+    </frame>
+    <frame>
+      <ip>0x514FD47</ip>
+      <obj>/usr/lib/libc.so.6</obj>
+      <fn>raise</fn>
+      <dir>/usr/src/debug/glibc/glibc/signal/../sysdeps/posix</dir>
+      <file>raise.c</file>
+      <line>26</line>
+    </frame>
+    <frame>
+      <ip>0x51307C0</ip>
+      <obj>/usr/lib/libc.so.6</obj>
+      <fn>abort</fn>
+      <dir>/usr/src/debug/glibc/glibc/stdlib</dir>
+      <file>abort.c</file>
+      <line>77</line>
+    </frame>
+    <frame>
+      <ip>0x4D3F719</ip>
+      <obj>/usr/lib/libstdc++.so.6.0.36</obj>
+      <fn>__gnu_debug::_Error_formatter::_M_error() const</fn>
+      <dir>/usr/src/debug/gcc/gcc-build/x86_64-pc-linux-gnu/libstdc++-v3/src/c++11/../../../../../gcc/libstdc++-v3/src/c++11</dir>
+      <file>debug.cc</file>
+      <line>1413</line>
+    </frame>
+    <frame>
+      <ip>0x4002D6E</ip>
+      <obj>/mnt/data/Workspaces/Github/nmkdeveloper/Problem-solving/1 - ONLINEJUDGE/hnoj.edu.vn/d16apple/bin/Debug/d16apple</obj>
+      <fn>operator[]</fn>
+      <dir>/usr/include/c++/16/debug</dir>
+      <file>vector</file>
+      <line>523</line>
+    </frame>
+    <frame>
+      <ip>0x4002D6E</ip>
+      <obj>/mnt/data/Workspaces/Github/nmkdeveloper/Problem-solving/1 - ONLINEJUDGE/hnoj.edu.vn/d16apple/bin/Debug/d16apple</obj>
+      <fn>Sub1::Init() [clone .cold]</fn>
+      <dir>/mnt/data/Workspaces/Github/nmkdeveloper/Problem-solving/1 - ONLINEJUDGE/hnoj.edu.vn/d16apple</dir>
+      <file>APPLE.CPP</file>
+      <line>89</line>
+    </frame>
+    <frame>
+      <ip>0x4002EA3</ip>
+      <obj>/mnt/data/Workspaces/Github/nmkdeveloper/Problem-solving/1 - ONLINEJUDGE/hnoj.edu.vn/d16apple/bin/Debug/d16apple</obj>
+      <fn>Solve</fn>
+      <dir>/mnt/data/Workspaces/Github/nmkdeveloper/Problem-solving/1 - ONLINEJUDGE/hnoj.edu.vn/d16apple</dir>
+      <file>APPLE.CPP</file>
+      <line>95</line>
+    </frame>
+    <frame>
+      <ip>0x4002EA3</ip>
+      <obj>/mnt/data/Workspaces/Github/nmkdeveloper/Problem-solving/1 - ONLINEJUDGE/hnoj.edu.vn/d16apple/bin/Debug/d16apple</obj>
+      <fn>main</fn>
+      <dir>/mnt/data/Workspaces/Github/nmkdeveloper/Problem-solving/1 - ONLINEJUDGE/hnoj.edu.vn/d16apple</dir>
+      <file>APPLE.CPP</file>
+      <line>103</line>
+    </frame>
+  </stack>
+</fatal_signal>
+
+
+<status>
+  <state>FINISHED</state>
+  <time>00:00:00:00.737 </time>
+</status>
+
+<errorcounts>
+</errorcounts>
+
+<suppcounts>
+</suppcounts>
+
+</valgrindoutput>
+
